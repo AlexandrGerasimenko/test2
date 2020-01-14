@@ -3,27 +3,6 @@ import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getCountries} from '../actions/countries';
 
-
-// import { Redirect } from 'react-router';
-// import {Link } from 'react-router-dom';
-
-
-// var myHeaders = new Headers();
-//         myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9yZWFjdC5vY3RhcmluZS5jb20udWFcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE1Nzg1MTM5MTIsIm5iZiI6MTU3ODUxMzkxMiwianRpIjoia0JWZFhMd0ExREY1cmVuUyIsInN1YiI6MSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.8JeFlcu08C7e8zL7ClR-NPT8MrcuZt0gwKc0pRP8Z9M");
-//         myHeaders.append("X-Requested-With", "XMLHttpRequest");
-
-//         var formdata = new FormData();
-//         formdata.append("content_type", "country");
-//         formdata.append("action", "view");
-
-//         var requestOptions = {
-//           method: 'POST',
-//           headers: myHeaders,
-//           body: formdata,
-//           redirect: 'follow'
-//         };
-
-
 // const SignUp = () => (
 // <div classemail="log-wrapper flex">
 //     <div classemail="container">

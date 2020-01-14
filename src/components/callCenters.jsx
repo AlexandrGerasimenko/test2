@@ -10,15 +10,6 @@ class CallCenters extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // this.fileInput = React.createRef();
-    // this.handleChangeName = this.handleChangeName.bind(this);
-    // this.handleChangeFlag = this.handleChangeFlag.bind(this);
-    // this.handleChangeCurrency = this.handleChangeCurrency.bind(this);
-    // this.handleCurrencySymbol = this.handleCurrencySymbol.bind(this);
-    // this.handleExchange = this.handleExchange.bind(this);
-    // this.handleChangeCode = this.handleChangeCode.bind(this);
-    // this.handleChangeCodeLength = this.handleChangeCodeLength.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
@@ -29,18 +20,9 @@ class CallCenters extends Component {
   
   
     render() {
-      // console.log(this.props.countries);
 
     return (
         <div >
-
-        <div>
-            <button onClick={this.props.onGetCallCenter}>Get tracks</button>
-        </div>
-        <ul>
-            {/* {this.props.countries.status} */}
-            {/* <button onClick={() => console.log(this.props.countries)}>Props </button> */}
-        </ul>
         <table >
         <thead>
     <tr>
@@ -50,10 +32,11 @@ class CallCenters extends Component {
       <td> Operators Count </td>
       <td> Managers Count </td>
       <td> Main Managers Count </td>
+      <td> Edit</td>
+
     </tr> 
   </thead>
   <tbody>
-    {console.log(this.props)}
       {this.props.callCenters.map(callCenter =>
         <tr key={callCenter.id}>
             { <td> {callCenter.name} </td> }
@@ -67,13 +50,12 @@ class CallCenters extends Component {
 
 
     </tr> 
-    )}
+        )}
     
-  </tbody>
-  </table>
- {/* <AddCountry /> */}
-  <button onClick = {() => {ReactDOM.render(<AddCallcenter onGetCallCenter = {this.props.onGetCallCenter} countries = {this.props.countries} />, document.getElementById('add2'))}}>Добавить CallCenter</button>
-  <div id = 'add2'></div>
+      </tbody>
+    </table>
+    <button onClick = {() => {ReactDOM.render(<AddCallcenter onGetCallCenter = {this.props.onGetCallCenter} countries = {this.props.countries} />, document.getElementById('add2'))}}>Добавить CallCenter</button>
+    <div id = 'add2'></div>
         </div>
       );
     }

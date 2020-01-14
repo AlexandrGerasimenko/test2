@@ -2,14 +2,14 @@
 
 import countries from './countries'
 import callCenters from './callCenters'
-// import CartReducer from './cartReducer'
+import users from './users'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
 const allReducers = combineReducers({
    countries,
-   callCenters
-   // cart: CartReducer
+   callCenters,
+   users
 });
 
 export default createStore(allReducers, compose(

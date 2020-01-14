@@ -27,6 +27,10 @@ class AddCountry extends Component {
     }
     handleChangeFlag(event) {
         this.setState({flag: event.target.value});
+        event.preventDefault()
+        let file = event.target.files[0];
+        console.log(file)
+        // formdata.append(event.target.files)
     }
     handleChangeCurrency(event) {
         this.setState({currency: event.target.value});
@@ -83,6 +87,7 @@ class AddCountry extends Component {
             formdata.append("id", this.props.country.id);
         
 
+
         var requestOptions = {
             method: 'POST',
             headers: myHeaders,
@@ -92,7 +97,7 @@ class AddCountry extends Component {
         // console.log(!!(this.props.country))
         // console.log(this.props.country == true)
         let url = !!(this.props.country) ? "http://react.octarine.com.ua/api/country/edit" : "http://react.octarine.com.ua/api/country/create"
-        // console.log(url)
+
         fetch(url, requestOptions).then(response => response.text()).then(result => console.log(result)).then(() => this.props.onGetCountries()).then(() => this.handleClickDel()).catch(error => console.log('error', error));
         event.preventDefault();
     }
@@ -112,7 +117,7 @@ class AddCountry extends Component {
                             <br/>
                             <input type="text"
                                 value={
-                                    this.state.name || this.props.country && this.props.country.name
+                                    this.state.name || (this.props.country && this.props.country.name)
                                 }
                                 onChange={
                                     this.handleChangeName

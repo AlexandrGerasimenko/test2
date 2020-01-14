@@ -22,18 +22,38 @@ table {
   border: 4px double black; 
   border-collapse: collapse;
   margin: auto;
- }
- th { 
+}
+th { 
   text-align: left; 
   background: #ccc; 
   padding: 5px; 
   border: 1px solid black;
- }
- td { 
+}
+td { 
   padding: 5px; 
   border: 1px solid black; 
- }
- .addCountry {
+}
+.addCountry, .addUser {
   display: flex;
   flex-direction: column;
- }
+  position: fixed;
+  background-color: #fff;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  margin: 15px;
+}
+
+.headerLinks > a{
+ margin-left: 10px;
+}
+
+.flex{
+  display: flex;
+}
+

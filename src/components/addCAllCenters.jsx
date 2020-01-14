@@ -8,12 +8,10 @@ class AddCallcenters extends Component {
         this.state = {};
         this.fileInput = React.createRef();
         this.handleChangeName = this.handleChangeName.bind(this);
-        
-        this.handleExchange = this.handleExchange.bind(this);
-        this.handleChangeCode = this.handleChangeCode.bind(this);
-        this.handleChangeCodeLength = this.handleChangeCodeLength.bind(this);
+
+        this.handleCallCenterCountry = this.handleCallCenterCountry.bind(this);
+        this.handleChangeIp = this.handleChangeIp.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleClickDel = this.handleClickDel.bind(this);
 
     }
     handleClickDel() {
@@ -22,64 +20,57 @@ class AddCallcenters extends Component {
     handleChangeName(event) {
         this.setState({name: event.target.value});
     }
-    
-    handleExchange(event) {
-        this.setState({country: event.target.value});
+
+    handleCallCenterCountry(event) {
+        this.setState({callCenterCountry: event.target.value});
     }
 
-    handleChangeCode(event) {
-        this.setState({code: event.target.value});
-    }
-    handleChangeCodeLength(event) {
-        this.setState({codeLength: event.target.value});
+    handleChangeIp(event) {
+        this.setState({ip: event.target.value});
     }
     handleSubmit(event) {
-        if( this.props.countries.map(country => country.name).indexOf(this.state.country) >= 0){
+
         event.preventDefault();
+        if (this.state.ip && this.state.ip !== '192.168.88.1') {
+            alert('Неверный Ip')
+        }
+        if ((this.state.callCenterCountry && (this.props.countries.map(country => country.name).indexOf(this.state.callCenterCountry) <= 0))) {
+            alert('Неверный ctr')
+        } else {
+            let country_id = !(this.state.callCenterCountry) ? this.props.callCenter.country.id : this.props.countries.filter((country) => country.name === this.state.callCenterCountry)[0].id
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer " + localStorage.token);
+            myHeaders.append("X-Requested-With", "XMLHttpRequest");
+            var formdata = new FormData();
 
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + localStorage.token);
-        myHeaders.append("X-Requested-With", "XMLHttpRequest");
-        // function chooseData(param){
-        //     if(!!this.state.param){
-        //      return   this.state.param
-        //     }
-        //     return this.props.country.param
-        // }
-        var formdata = new FormData();
-        formdata.append("name", (!!this.state.name) ? this.state.name : this.props.callCenter.name);
-        console.log((!!this.state.name))
-        
-        formdata.append("country_id", "1");
-        formdata.append("ip", "");
+            formdata.append("content_type", "call_center");
+            if (this.props.callCenter) {
+                formdata.append("action", "edit")
+                formdata.append("name", this.state.name ? this.state.name : this.props.callCenter.name);
+                formdata.append("id", this.props.callCenter.id);
+                formdata.append("country_id", country_id);
+                formdata.append("ip", this.state.ip ? this.state.ip : this.props.callCenter.ip);
+            } else {
+                formdata.append("action", "create");
+                formdata.append("name", this.state.name);
+                formdata.append("ip", this.state.ip);
+                formdata.append("country_id", country_id);
+            }
 
-        formdata.append("content_type", "call_center");
-        formdata.append("action", "create");
-        if (!!(this.props.country)) 
-            formdata.append("id", this.props.country.id);
-        
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
+            };
+            let url = !!(this.props.callCenter) ? "http://react.octarine.com.ua/api/call-center/edit" : "http://react.octarine.com.ua/api/call-center/create"
+            fetch(url, requestOptions).then(response => response.text()).then(() => this.props.onGetCallCenter()).then(() => this.handleClickDel()).catch(error => console.log('error', error));
+            event.preventDefault();
+        }
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: formdata,
-            redirect: 'follow'
-        };
-        // console.log(!!(this.props.country))
-        // console.log(this.props.country == true)
-        let url = !!(this.props.callCenter) ? "http://react.octarine.com.ua/api/call-center/edit" : "http://react.octarine.com.ua/api/call-center/create"
-        // console.log(url)
-        fetch(url, requestOptions).then(response => response.text()).then(result => console.log(result))
-        .then(() => this.props.onGetCallCenter())
-                .then(() => this.handleClickDel())
-                        .catch(error => console.log('error', error));
-        event.preventDefault();
-    }else{
-        alert('Перед созданием колл-центра, создайте страну')
-    }
 
     }
-    render() { // console.log(this.props == true);
+    render() {
 
         return (
             <div>
@@ -89,41 +80,41 @@ class AddCallcenters extends Component {
                             this.handleSubmit
                     }>
                         <label>
-                            Название :
+                            Название колл-центра :
                             <br/>
                             <input type="text"
                                 value={
-                                    this.state.name || this.props.country && this.props.country.name
+                                    this.state.name || (this.props.callCenter && this.props.callCenter.name)
                                 }
                                 onChange={
                                     this.handleChangeName
                                 }/> {/* {console.log(this.props)} */} </label>
-              
-                    
+
+
                         <label>
                             Страна:
                             <br/>
                             <input type="text"
                                 value={
-                                    this.state.exchange || (this.props.country && this.props.country.dollar_rate)
+                                    this.state.callCenterCountry || (this.props.callCenter && this.props.callCenter.country.name)
                                 }
                                 onChange={
-                                    this.handleExchange
+                                    this.handleCallCenterCountry
                                 }/>
                         </label>
                         <label>
-                            Код страны (по номеру телефона):
+                            IP – в формате 192.168.88.1:
                             <br/>
-                            <input type="number"
+                            <input type="text"
                                 value={
-                                    this.state.code || (this.props.country && this.props.country.code)
+                                    this.state.ip || (this.props.callCenter && this.props.callCenter.ip)
                                 }
                                 onChange={
-                                    this.handleChangeCode
+                                    this.handleChangeIp
                                 }/>
                         </label>
-               
-                        <br/> {/* <button type="submit" value="Отправить" /><button></button> */}
+
+                        <br/>
                         <button type="submit">Отправить</button>
                     </form>
                 </div>

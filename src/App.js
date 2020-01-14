@@ -2,7 +2,9 @@ import React from 'react';
 import './App.css';
 import LoginPage from './components/loginPage'
 import Countries from './components/countries'
+import Users from './components/users'
 import CallCenters from './components/callCenters'
+import Header from './components/header'
 import MainPage from './components/mainPage'
 import { createBrowserHistory as createHistory } from 'history'
 import { Provider } from 'react-redux';
@@ -30,16 +32,15 @@ function App() {
         <Provider store={store}>
         <Router history={history}>
           <div className='main-wrapper'>
-            {/* <Header /> */}
+            <Header />
             <div className='content-wraper'>
-              {/* <Sider /> */}
               <Switch>
                 <Route path="/login" component={LoginPage} />
                 <Route path="/" component={localStorage.token ? MainPage :LoginPage } exact />
                 <PrivateRoute path="/main" exact component={MainPage} />
                 <PrivateRoute path="/countries" exact component={Countries} />
                 <PrivateRoute path="/callCenters" component={CallCenters} />
-                {/* <PrivateRoute path="/cart"  component={CartPage} /> */}
+                <PrivateRoute path="/users" component={Users} />
               </Switch>
             </div>
           </div>

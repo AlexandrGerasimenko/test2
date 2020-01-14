@@ -3,26 +3,6 @@ import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getCountries} from '../actions/countries';
 
-// const SignUp = () => (
-// <div classemail="log-wrapper flex">
-//     <div classemail="container">
-//       <div >
-//         Войдите или авторизируйтесь
-//       </div>
-//       <div>
-//         <div>E-mail</div>
-//         <div> <input></input> </div>
-//       </div>
-//       <div>
-//         <div>Password</div>
-//         <div><input></input></div>
-//       </div>
-//       <div><button onClick = {() => auth()}>Вход</button></div>
-//     </div>
-// </div>
-// );
-
-
 class SignUp extends Component {
     constructor(props) {
         super(props)
